@@ -1,0 +1,37 @@
+header {
+    color: aliceblue;
+    background: linear-gradient(90deg, darkblue, indigo);
+    height: 10vh;
+}
+
+h1, h2, h3 {
+    font-weight: bold;
+}
+
+main {
+    height: 80vh;
+    justify-content: space-evenly;
+}
+
+aside {
+    width: fit-content;
+    margin: 20px 20px 0 20px;
+}
+
+#search-container {
+    border-bottom: solid 1px black;
+    padding-bottom: 20px !important;
+}
+
+section {
+    width: 60%;
+}
+
+section div {
+    height: 45%;
+}
+
+#city-container {
+    border: solid 1px black;
+    margin-top: 20px;
+}

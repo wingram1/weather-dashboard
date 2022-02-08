@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
+    <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+    <link rel="stylesheet" href="./assets/style.css" />
+    <title>Document</title>
+</head>
+<body>
+    <header class="d-flex justify-content-center p-4">
+        <h1>Weather Dashboard</h1>
+    </header>
+    <main class="d-flex flex-row w-100">
+        <aside class="w-30 border-dark">
+            <div id="search-container" class="d-flex flex-column p-2 w-100">
+                <h2>Search for a city</h2>
+                <input type="text" placeholder="Enter City Name" id="city-input" />
+                <button class="btn btn-primary" id="search-btn">Search</button>
+            </div>
+            <div id="history-container" class="d-flex flex-column p-2 w-100">
+                <!-- search history here -->
+            </div>
+        </aside>
+        <section class="w-60 border-dark">
+            <div id="city-container" class="d-flex flex-column justify-content-start p-2 w-100">
+                <!-- city/date/icon -->
+                <!-- wind speed -->
+                <!-- Humidity -->
+                <!-- UV index (color has bg-color of green/yellow/red) -->
+            </div>
+            <h3>5-day forecast:</h2>
+            <div id="forecast-container" class="d-flex flex-row justify-content-evenly w-100">
+                <!-- 5-day forecast displays here -->
+            </div>
+        </section>
+        
+    </main>
+
+
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script href="./assets/script.js"></script>
+</body>
+</html>
