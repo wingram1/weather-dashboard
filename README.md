@@ -1,4 +1,4 @@
-# Welcome to my coding quiz!
+# Welcome to my weather dashboard!
 
 ## Once loaded, enter a city into the search to get started.
  - If the city is valid with the OpenWeather Geocoding and One Call API, you will see a forecast for the city appear in the containers to the right.
