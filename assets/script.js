@@ -148,27 +148,35 @@ var getForecast = function(lat, lon) {
                         temp: c.temp,
                         // Wind
                         wind: c.wind_speed,
+                        // Humidity
+                        humidity: c.humidity,
                         // UV Index
                         uvi: c.uvi,
                         // Icon
-                        icon: c.icon
+                        icon: c.weather[0].icon
                     }
                 ]
 
-                // Create daily forecast data
+                // Create daily forecast data starting from tomorrow
                 for (i = 1; i < 6; i++) {
-                    var workingObject = d[i]
                     var newObject = {
-                        //DATE
-                        // ICON
+                        // DATE
+                        date: unixToDate(d[i].dt),
                         // TEMP
+                        temp: d[i].temp,
                         // WIND
+                        wind: d[i].wind_speed,
                         // HUMIDITY
-                    }
+                        humidity: d[i].humidity,
+                        // ICON
+                        icon: d[i].weather[0].icon
+                    };
+
+                    // push new object to forecastData
+                    forecastData.push(newObject);
                 }
 
-                
-
+                // log to console
                 console.log(forecastData);
                 
                 });
