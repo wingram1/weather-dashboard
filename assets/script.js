@@ -1,6 +1,8 @@
 //misc global variables
 var searchForm = document.querySelector("#search-container");
 var historyContainer = document.querySelector("#history-container");
+var cityContainer = document.querySelector("#city-container");
+var forecastContainer = document.querySelector("#forecast-container");
 var citySearchHistory = [];
 var searchInput = null;
 
@@ -124,8 +126,6 @@ var getCoords = function(targetCity) {
 var getForecast = function(lat, lon) {
     console.log("Getting forecast for coordinates " + lat + ", " + lon + "...");
 
-    // TODO: maybe slice lat/lon
-
     var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&units=imperial&appid=9f22897565b785c5e1809cff5dde2ef9";
 
     console.log(apiUrl);
@@ -163,7 +163,7 @@ var getForecast = function(lat, lon) {
                         // DATE
                         date: unixToDate(d[i].dt),
                         // TEMP
-                        temp: d[i].temp,
+                        temp: d[i].temp.day,
                         // WIND
                         wind: d[i].wind_speed,
                         // HUMIDITY
@@ -176,8 +176,10 @@ var getForecast = function(lat, lon) {
                     forecastData.push(newObject);
                 }
 
-                // log to console
                 console.log(forecastData);
+
+                // generate HTML
+                generateForecast(forecastData);
                 
                 });
             }
@@ -188,6 +190,7 @@ var getForecast = function(lat, lon) {
 
 }
 
+// Convert unix to MM/DD/YYYY
 var unixToDate = function(unix) {
     var ms = (unix * 1000);
     var date = new Date(ms);
@@ -196,21 +199,86 @@ var unixToDate = function(unix) {
     return formattedDate;
 };
 
-var kelvinstoF = function(k) {
-    return ((k - 273.15) * 9/5 + 32);
-};
-
-// Generate HTML using data=
+// Generate HTML using forecastData
 var generateForecast = function(data) {
+    // clear content
+    $("#city-container").empty();
+    $("#forecast-container").empty();
+
     // Current Weather
+    var titleContainer = document.createElement("div");
+    titleContainer.className = "d-flex flex-row justify-content-start";
+    titleContainer.style = "height: 20%;"
+    titleContainer.textContent = data[0].name
+    cityContainer.appendChild(titleContainer);
 
+    var cityName = document.createElement("h2");
+    cityName.className = "pr-2"
+    cityName.textContent = data[0].city;
+    titleContainer.appendChild(cityName);
 
+    var currentDate = document.createElement("h2");
+    currentDate.textContent = "(" + data[0].date + ")";
+    titleContainer.appendChild(currentDate);
 
+    var currentIcon = document.createElement("img")
+    currentIcon.src = "http://openweathermap.org/img/wn/" + data[0].icon + "@2x.png";
+    currentIcon.style = "height: 42px";
+    titleContainer.appendChild(currentIcon);
+
+    var currentTemp = document.createElement("p");
+    currentTemp.textContent = "Temp: " + data[0].temp + "°F"
+    cityContainer.appendChild(currentTemp)
+
+    var currentWind = document.createElement("p");
+    currentWind.textContent = "Wind: " + data[0].wind + " MPH"
+    cityContainer.appendChild(currentWind);
+
+    var currentHumidity = document.createElement("p");
+    currentHumidity.textContent = "Humidity: " + data[0].humidity + " %"
+    cityContainer.appendChild(currentHumidity);
+
+    var uviContainer = document.createElement("div");
+    uviContainer.className = "d-flex flex-row justify-content-start";
+    cityContainer.appendChild(uviContainer)
+
+    var uviLabel = document.createElement("p");
+    uviLabel.textContent = "UV Index: ";
+    uviContainer.appendChild(uviLabel)
+
+    var currentUVI= document.createElement("p");
+    currentUVI.textContent = data[0].uvi;
+    currentUVI.className = "ml-2 pl-1 pr-1 mb-auto rounded";
+    currentUVI.style = "background-color: " + getUviColor(data[0].uvi);
+    uviContainer.appendChild(currentUVI)
 
     // 5-Day Forecast
+    for (i = 1; i < data.length; i++) {
+        var card = document.createElement("div");
+        card.className = "forecast-card rounded";
+        forecastContainer.appendChild(card)
+
+        var cardDate = data[i].date;
+    }
 }
 
-
+var getUviColor = function(uvi) {
+    if (uvi < 3) {
+        return "green";
+    } 
+    else if (uvi >= 3 && uvi < 6) {
+        return "yellow";
+    }
+    else if (uvi >= 6 && uvi < 8) {
+        return "orange";
+    }
+    else if (uvi >= 8 && uvi < 11) {
+        return "red";
+    }
+    else if (uvi >= 11) {
+        return "purple";
+    }
+}
 
 
 

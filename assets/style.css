@@ -39,3 +39,10 @@ section div {
 #forecast-container {
     overflow: scroll;
 }
+
+.forecast-card {
+    background-color: darkslategrey;
+    color: white;
+    width: 200px;
+    height: 90%;
+}
