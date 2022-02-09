@@ -35,3 +35,7 @@ section div {
     border: solid 1px black;
     margin-top: 20px;
 }
+
+#forecast-container {
+    overflow: scroll;
+}
