@@ -10,4 +10,4 @@
 
 <img src="./assets/images/screenshot.png" alt="Screenshot of the application" />
 
-## Link to my gitHub account: [https://github.com/wingram1/coding-quiz](https://github.com/wingram1/coding-quiz)
+## Link to my gitHub account: [https://github.com/wingram1/weather-dashboard](https://github.com/wingram1/weather-dashboard)
