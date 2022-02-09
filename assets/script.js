@@ -2,12 +2,11 @@
 var searchForm = document.querySelector("#search-container");
 var historyContainer = document.querySelector("#history-container");
 var citySearchHistory = [];
+var searchInput = null;
 
 // take input, save to localStorage
 var formSubmitHandler = function(event) {
     event.preventDefault();
-
-    var searchInput = null;
 
     // if button, tell it to get textContent
     if (event.target.tagName === "BUTTON") {
@@ -116,7 +115,7 @@ var getCoords = function(targetCity) {
                     getForecast(lat, lon);
                 });
             } else {
-                console.log("Error connecting to openweather.com");
+                console.log("Error connecting to openweather.com Geocoding API");
             }
 });
 }
@@ -124,10 +123,84 @@ var getCoords = function(targetCity) {
 // fetch weather from API
 var getForecast = function(lat, lon) {
     console.log("Getting forecast for coordinates " + lat + ", " + lon + "...");
+
+    // TODO: maybe slice lat/lon
+
+    var apiUrl = "https://api.openweathermap.org/data/2.5/onecall?lat=" + lat + "&lon=" + lon + "&exclude=minutely,hourly,alerts&units=imperial&appid=9f22897565b785c5e1809cff5dde2ef9";
+
+    console.log(apiUrl);
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+                ////// GET DATA //////
+                var c = data.current;
+                var d = data.daily;
+
+                var forecastData = [
+                    {
+                        // City Name
+                        city: searchInput,
+                        // Date (MM/DD/YYYY)
+                        date: unixToDate(c.dt),
+                        // Temp
+                        temp: c.temp,
+                        // Wind
+                        wind: c.wind_speed,
+                        // UV Index
+                        uvi: c.uvi,
+                        // Icon
+                        icon: c.icon
+                    }
+                ]
+
+                // Create daily forecast data
+                for (i = 1; i < 6; i++) {
+                    var workingObject = d[i]
+                    var newObject = {
+                        //DATE
+                        // ICON
+                        // TEMP
+                        // WIND
+                        // HUMIDITY
+                    }
+                }
+
+                
+
+                console.log(forecastData);
+                
+                });
+            }
+            else {
+                console.log("Error connecting to openweather.com One Call API")
+            }
+        });
+
 }
 
+var unixToDate = function(unix) {
+    var ms = (unix * 1000);
+    var date = new Date(ms);
+    var format = {month: 'numeric', day: 'numeric', year: 'numeric'};
+    var formattedDate = date.toLocaleDateString('en-US', format);
+    return formattedDate;
+};
 
-// Generate HTML using data
+var kelvinstoF = function(k) {
+    return ((k - 273.15) * 9/5 + 32);
+};
+
+// Generate HTML using data=
+var generateForecast = function(data) {
+    // Current Weather
+
+
+
+
+    // 5-Day Forecast
+}
 
 
 
