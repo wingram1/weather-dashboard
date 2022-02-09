@@ -109,10 +109,6 @@ var getCoords = function(targetCity) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
-                    if (!lat || !lon) {
-                        alert("Oops! We couldn't find a city with the name of " + targetCity + ".");
-                    }
-
                     var lat = (data[0].lat);
                     var lon = (data[0].lon);
 
