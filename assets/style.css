@@ -37,12 +37,12 @@ section div {
 }
 
 #forecast-container {
-    overflow: scroll;
+    overflow-x: auto;
 }
 
 .forecast-card {
     background-color: darkslategrey;
     color: white;
-    width: 200px;
+    min-width: 250px;
     height: 90%;
 }

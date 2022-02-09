@@ -248,17 +248,36 @@ var generateForecast = function(data) {
 
     var currentUVI= document.createElement("p");
     currentUVI.textContent = data[0].uvi;
-    currentUVI.className = "ml-2 pl-1 pr-1 mb-auto rounded";
-    currentUVI.style = "background-color: " + getUviColor(data[0].uvi);
+    currentUVI.className = "ml-2 pl-3 pr-3 mb-auto rounded";
+    currentUVI.style = "background-color: " + getUviColor(data[0].uvi) + "; color: white;"
     uviContainer.appendChild(currentUVI)
 
     // 5-Day Forecast
     for (i = 1; i < data.length; i++) {
         var card = document.createElement("div");
-        card.className = "forecast-card rounded";
-        forecastContainer.appendChild(card)
+        card.className = "forecast-card rounded m-2 p-3";
+        forecastContainer.appendChild(card);
 
-        var cardDate = data[i].date;
+        var cardDate = document.createElement("h4");
+        cardDate.textContent = data[i].date;
+        card.appendChild(cardDate);
+
+        var cardIcon = document.createElement("img");
+        cardIcon.src = "http://openweathermap.org/img/wn/" + data[i].icon + "@2x.png";
+        cardIcon.style = "height: 30px";
+        card.appendChild(cardIcon);
+
+        var cardTemp = document.createElement("p");
+        cardTemp.textContent = "Temp: " + data[i].temp + "°F"
+        card.appendChild(cardTemp)
+    
+        var cardWind = document.createElement("p");
+        cardWind.textContent = "Wind: " + data[i].wind + " MPH"
+        card.appendChild(cardWind);
+    
+        var cardHumidity = document.createElement("p");
+        cardHumidity.textContent = "Humidity: " + data[i].humidity + " %"
+        card.appendChild(cardHumidity);
     }
 }
 
@@ -280,11 +299,7 @@ var getUviColor = function(uvi) {
     }
 }
 
-
-
-
-
-//////////// EVENT LISTENERS ////////////
+//////////// CALL FUNCTIONS ////////////
 loadCities();
 
 searchForm.addEventListener('submit', formSubmitHandler);
