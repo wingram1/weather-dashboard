@@ -6,9 +6,22 @@ var citySearchHistory = [];
 // take input, save to localStorage
 var formSubmitHandler = function(event) {
     event.preventDefault();
-    var searchInput = document.querySelector("#city-input").value;
+
+    var searchInput = null;
+
+    // if button, tell it to get textContent
+    if (event.target.tagName === "BUTTON") {
+        searchInput = event.target.textContent;
+    }
+    // if form, tell it to get the input value
+    else if (event.target.tagName === "FORM") {
+        searchInput = document.querySelector("#city-input").value;
+    }
 
     console.log("Form submitted. Your input: " + searchInput);
+
+    // get coordinates of searchInput
+    getCoords(searchInput);
 
     // check if no prior search history
     if (citySearchHistory.length > 0) {
@@ -22,10 +35,6 @@ var formSubmitHandler = function(event) {
                 citySearchHistory.splice(i, 1);
                 saveCity(searchInput);
                 break;
-            }
-            // if there isn't, log that cities were compared and keep looping
-            else if (citySearchHistory[i] && citySearchHistory[i] != searchInput) {
-                console.log(citySearchHistory[i] + " != " + searchInput);
             }
             // if nothing on the last iteration, save a new one
             else if (!citySearchHistory[i]) {
@@ -73,15 +82,17 @@ var loadCities = function() {
         // kill all babies of historyContainer
         $("#history-container").empty();
 
-
         // make new babies
         for (i = (citySearchHistory.length - 1); i > -1; i--) {
             var workingButton = document.createElement("button");
-            workingButton.className = "btn btn-secondary mt-2 mb-2";
+            workingButton.className = "btn btn-secondary mt-2 mb-2 history-button";
             workingButton.textContent = citySearchHistory[i];
             historyContainer.appendChild(workingButton);
         }
         console.log("Finished loading history.")
+
+        // add event listeners for buttons
+        $(".history-button").on("click", formSubmitHandler)
     }
     else {
         console.log("No cities found.");
@@ -89,7 +100,31 @@ var loadCities = function() {
     }
 }
 
+// get coordinates of city using OpenWeather Geocoding
+var getCoords = function(targetCity) {
+    var apiUrl = "http://api.openweathermap.org/geo/1.0/direct?q=" + targetCity + ",US&appid=9f22897565b785c5e1809cff5dde2ef9";
+
+    fetch(apiUrl)
+        .then(function(response) {
+            if (response.ok) {
+                response.json().then(function(data) {
+
+                    var lat = (data[0].lat);
+                    var lon = (data[0].lon);
+                    
+                    console.log("Coordinates for " + targetCity + ": " + lat + ", " + lon);
+                    getForecast(lat, lon);
+                });
+            } else {
+                console.log("Error connecting to openweather.com");
+            }
+});
+}
+
 // fetch weather from API
+var getForecast = function(lat, lon) {
+    console.log("Getting forecast for coordinates " + lat + ", " + lon + "...");
+}
 
 
 // Generate HTML using data
