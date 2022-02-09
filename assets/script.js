@@ -248,7 +248,7 @@ var generateForecast = function(data) {
     var currentUVI= document.createElement("p");
     currentUVI.textContent = data[0].uvi;
     currentUVI.className = "ml-2 pl-3 pr-3 mb-auto rounded";
-    currentUVI.style = "background-color: " + getUviColor(data[0].uvi) + "; color: white;"
+    currentUVI.style = "background-color: " + getUviColor(data[0].uvi);
     uviContainer.appendChild(currentUVI)
 
     // 5-Day Forecast
@@ -282,19 +282,19 @@ var generateForecast = function(data) {
 
 var getUviColor = function(uvi) {
     if (uvi < 3) {
-        return "green";
+        return "green; color: white;";
     } 
     else if (uvi >= 3 && uvi < 6) {
-        return "yellow";
+        return "yellow; color: black;";
     }
     else if (uvi >= 6 && uvi < 8) {
-        return "orange";
+        return "orange; color: white;";
     }
     else if (uvi >= 8 && uvi < 11) {
-        return "red";
+        return "red; color: white;";
     }
     else if (uvi >= 11) {
-        return "purple";
+        return "purple; color: white;";
     }
 }
 
