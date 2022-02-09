@@ -109,17 +109,20 @@ var getCoords = function(targetCity) {
         .then(function(response) {
             if (response.ok) {
                 response.json().then(function(data) {
+                    if (!lat || !lon) {
+                        alert("Oops! We couldn't find a city with the name of " + targetCity + ".");
+                    }
 
                     var lat = (data[0].lat);
                     var lon = (data[0].lon);
-                    
+
                     console.log("Coordinates for " + targetCity + ": " + lat + ", " + lon);
                     getForecast(lat, lon);
                 });
             } else {
                 console.log("Error connecting to openweather.com Geocoding API");
             }
-});
+        })
 }
 
 // fetch weather from API
